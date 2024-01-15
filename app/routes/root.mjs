@@ -3,7 +3,7 @@ export default async (fastify, opts) => {
     url: "/",
     method: ["GET"],
     schema: {
-      description: "HydraDX API root",
+      description: "Basilisk API root",
       response: {
         200: {
           description: "Success Response",
@@ -16,7 +16,7 @@ export default async (fastify, opts) => {
       },
     },
     handler: async (request, reply) => ({
-      about: "Welcome to the HydraDX API",
+      about: "Welcome to the Basilisk API",
       docs: "Visit /docs",
     }),
   });
