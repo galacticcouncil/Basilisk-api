@@ -3,7 +3,7 @@ export default async (fastify, opts) => {
     url: "/app",
     method: ["GET"],
     schema: {
-      description: "API health check",
+      description: "API Health check",
       tags: ["health"],
       response: {
         200: {
