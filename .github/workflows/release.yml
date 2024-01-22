@@ -9,9 +9,8 @@ env:
   GCP_SERVICE_ACCOUNT: ${{secrets.GCP_SERVICE_ACCOUNT}}
   GCP_IDENTITY_PROVIDER_ID: ${{secrets.GCP_IDENTITY_PROVIDER_ID}}
   GCP_REGION: europe-west3
-  GCP_REPOSITORY: hydradx-api
-  GCP_APP: hydradx-api-app
-  GCP_JOBS: hydradx-api-jobs
+  GCP_REPOSITORY: basilisk-api
+  GCP_APP: basilisk-api-app
 
 jobs:
   test:
@@ -53,44 +52,3 @@ jobs:
         run: |-
           docker build --target api-app -t "${{env.GCP_REGION}}-docker.pkg.dev/${{env.GCP_PROJECT_ID}}/${{env.GCP_REPOSITORY}}/${{env.GCP_APP}}:latest" ./
           docker push "${{env.GCP_REGION}}-docker.pkg.dev/${{env.GCP_PROJECT_ID}}/${{env.GCP_REPOSITORY}}/${{env.GCP_APP}}:latest"
-
-      - name: Build and Push API jobs
-        run: |-
-          docker build --target api-jobs -t "${{env.GCP_REGION}}-docker.pkg.dev/${{env.GCP_PROJECT_ID}}/${{env.GCP_REPOSITORY}}/${{env.GCP_JOBS}}:latest" ./
-          docker push "${{env.GCP_REGION}}-docker.pkg.dev/${{env.GCP_PROJECT_ID}}/${{env.GCP_REPOSITORY}}/${{env.GCP_JOBS}}:latest"
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-
-    permissions:
-      contents: "read"
-      id-token: "write"
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Authenticate with GCP
-        uses: "google-github-actions/auth@v1"
-        with:
-          workload_identity_provider: ${{env.GCP_IDENTITY_PROVIDER_ID}}
-          service_account: ${{env.GCP_SERVICE_ACCOUNT}}
-
-      - name: Set up Cloud SDK
-        uses: "google-github-actions/setup-gcloud@v1"
-
-      - name: Set up gcloud beta
-        run: gcloud components install beta
-
-      - name: deploy cache_coingecko_tickers_job
-        run: gcloud beta run jobs replace .gcp/jobs/cache_coingecko_tickers_job.yml
-
-      - name: deploy cache_coinmarketcap_summary_job
-        run: gcloud beta run jobs replace .gcp/jobs/cache_coinmarketcap_summary_job.yml
-
-      - name: deploy cache_hydradx-ui_stats_tvl_job
-        run: gcloud beta run jobs replace .gcp/jobs/cache_hydradx-ui_stats_tvl_job.yml
-
-      - name: deploy api-app
-        run: gcloud beta run services replace .gcp/hydradx_api_app.yml
