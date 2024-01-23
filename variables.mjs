@@ -3,7 +3,6 @@ import { fileURLToPath } from "url";
 
 export const IS_DOCKER_RUN = process.env.DOCKER_RUN !== undefined;
 export const IS_GOOGLE_CLOUD_RUN = process.env.K_SERVICE !== undefined;
-export const IS_GCP_JOB = process.env.GOOGLE_CLOUD_RUN_JOB !== undefined;
 
 export const dirname = () => path.dirname(fileURLToPath(import.meta.url));
 
