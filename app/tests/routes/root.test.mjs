@@ -8,7 +8,7 @@ test("default root route", async (t) => {
     url: "/",
   });
   t.same(JSON.parse(res.payload), {
-    about: "Welcome to the HydraDX API",
+    about: "Welcome to the Basilisk API",
     docs: "Visit /docs",
   });
 });
