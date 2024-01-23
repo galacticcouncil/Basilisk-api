@@ -77,4 +77,4 @@ jobs:
         run: gcloud components install beta
 
       - name: deploy api-app
-        run: gcloud beta run services replace .gcp/hydradx_api_app.yml
+        run: gcloud beta run services replace .gcp/basilisk_api_app.yml
