@@ -30,7 +30,7 @@
     "bignumber.js": "^9.1.2",
     "close-with-grace": "^1.2.0",
     "dotenv": "^16.0.3",
-    "fastify": "^4.0.0",
+    "fastify": "^4.28.1",
     "fastify-cli": "^5.7.1",
     "fastify-plugin": "^4.0.0",
     "fs": "^0.0.1-security",
